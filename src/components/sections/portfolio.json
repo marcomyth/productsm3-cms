@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_sections_portfolios",
+  "info": {
+    "displayName": "Portfólio",
+    "icon": "images",
+    "description": "Seção de cases/projetos realizados"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subtitle": {
+      "type": "text"
+    },
+    "projects": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::project.project"
+    }
+  }
+}

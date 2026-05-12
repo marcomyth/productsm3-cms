@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_sections_feature_grids",
+  "info": {
+    "displayName": "Grade de Features",
+    "icon": "grid",
+    "description": "Seção com grade de benefícios/diferenciais"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subtitle": {
+      "type": "text"
+    },
+    "features": {
+      "type": "component",
+      "repeatable": true,
+      "component": "sections.feature"
+    }
+  }
+}

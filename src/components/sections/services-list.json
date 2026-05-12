@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_sections_services_lists",
+  "info": {
+    "displayName": "Lista de Serviços",
+    "icon": "briefcase",
+    "description": "Seção que exibe serviços oferecidos"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subtitle": {
+      "type": "text"
+    },
+    "services": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::service.service"
+    }
+  }
+}
