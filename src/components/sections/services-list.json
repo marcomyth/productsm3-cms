@@ -21,6 +21,11 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::service.service"
+    },
+    "appearance": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.appearance"
     }
   }
 }

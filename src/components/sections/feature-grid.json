@@ -21,6 +21,11 @@
       "type": "component",
       "repeatable": true,
       "component": "sections.feature"
+    },
+    "appearance": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.appearance"
     }
   }
 }

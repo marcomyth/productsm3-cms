@@ -526,6 +526,13 @@ async function seedLandingPage(strapi: Core.Strapi) {
         variant: 'outline',
         external: false,
       },
+      appearance: {
+        theme: 'light',
+        alignment: 'center',
+        width: 'wide',
+        spacing: 'xl',
+        variant: 'split',
+      },
     },
     {
       __component: 'sections.stats',
@@ -537,6 +544,12 @@ async function seedLandingPage(strapi: Core.Strapi) {
         { value: '18', label: 'Conversão média em LPs', suffix: '%' },
         { value: '99.9', label: 'Uptime garantido', suffix: '%' },
       ],
+      appearance: {
+        theme: 'dark',
+        alignment: 'center',
+        width: 'default',
+        spacing: 'lg',
+      },
     },
     {
       __component: 'sections.feature-grid',
@@ -582,6 +595,12 @@ async function seedLandingPage(strapi: Core.Strapi) {
             'Atendimento direto com quem desenvolveu o seu projeto. Sem terceirizar, sem call center.',
         },
       ],
+      appearance: {
+        theme: 'light',
+        alignment: 'left',
+        width: 'wide',
+        spacing: 'lg',
+      },
     },
     {
       __component: 'sections.services-list',
@@ -590,6 +609,12 @@ async function seedLandingPage(strapi: Core.Strapi) {
       subtitle:
         'Do site institucional ao SaaS completo — entregamos a solução web que sua empresa precisa.',
       services: services.map((s) => s.documentId),
+      appearance: {
+        theme: 'muted',
+        alignment: 'left',
+        width: 'default',
+        spacing: 'lg',
+      },
     },
     {
       __component: 'sections.process',
@@ -626,6 +651,12 @@ async function seedLandingPage(strapi: Core.Strapi) {
           icon: 'lucide:rocket',
         },
       ],
+      appearance: {
+        theme: 'light',
+        alignment: 'center',
+        width: 'default',
+        spacing: 'lg',
+      },
     },
     {
       __component: 'sections.portfolio',
@@ -633,6 +664,12 @@ async function seedLandingPage(strapi: Core.Strapi) {
       title: 'Projetos que nos deixam orgulhosos.',
       subtitle: 'Uma seleção dos últimos trabalhos entregues pela productsm3.',
       projects: projects.map((p) => p.documentId),
+      appearance: {
+        theme: 'dark',
+        alignment: 'left',
+        width: 'wide',
+        spacing: 'xl',
+      },
     },
     {
       __component: 'sections.testimonials',
@@ -640,6 +677,12 @@ async function seedLandingPage(strapi: Core.Strapi) {
       title: 'O que nossos clientes dizem.',
       subtitle: 'Confiança construída projeto por projeto.',
       testimonials: testimonials.map((t) => t.documentId),
+      appearance: {
+        theme: 'muted',
+        alignment: 'center',
+        width: 'default',
+        spacing: 'lg',
+      },
     },
     {
       __component: 'sections.faq',
@@ -672,6 +715,12 @@ async function seedLandingPage(strapi: Core.Strapi) {
             'Sim. Entregamos com um CMS amigável (Strapi, Sanity ou WordPress headless, conforme o caso). Sua equipe edita sem precisar de desenvolvedor.',
         },
       ],
+      appearance: {
+        theme: 'light',
+        alignment: 'left',
+        width: 'narrow',
+        spacing: 'lg',
+      },
     },
     {
       __component: 'sections.cta',
@@ -690,6 +739,12 @@ async function seedLandingPage(strapi: Core.Strapi) {
         variant: 'outline',
         external: true,
       },
+      appearance: {
+        theme: 'primary',
+        alignment: 'center',
+        width: 'default',
+        spacing: 'xl',
+      },
     },
     {
       __component: 'sections.contact-form',
@@ -700,6 +755,12 @@ async function seedLandingPage(strapi: Core.Strapi) {
       submitLabel: 'Enviar mensagem',
       successMessage:
         'Recebemos sua mensagem. Em breve nossa equipe entra em contato!',
+      appearance: {
+        theme: 'light',
+        alignment: 'left',
+        width: 'narrow',
+        spacing: 'lg',
+      },
     },
   ];
 

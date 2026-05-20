@@ -24,6 +24,11 @@
     "successMessage": {
       "type": "text",
       "default": "Recebemos sua mensagem. Em breve entraremos em contato."
+    },
+    "appearance": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.appearance"
     }
   }
 }

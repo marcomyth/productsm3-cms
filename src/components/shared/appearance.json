@@ -1,0 +1,54 @@
+{
+  "collectionName": "components_shared_appearances",
+  "info": {
+    "displayName": "Aparência",
+    "icon": "paint-brush",
+    "description": "Controles visuais reutilizáveis: tema, alinhamento, largura, espaçamento e fundo"
+  },
+  "options": {},
+  "attributes": {
+    "theme": {
+      "type": "enumeration",
+      "enum": ["light", "dark", "primary", "accent", "muted"],
+      "default": "light",
+      "description": "Esquema de cores da seção"
+    },
+    "alignment": {
+      "type": "enumeration",
+      "enum": ["left", "center", "right"],
+      "default": "left",
+      "description": "Alinhamento horizontal do conteúdo"
+    },
+    "width": {
+      "type": "enumeration",
+      "enum": ["narrow", "default", "wide", "full"],
+      "default": "default",
+      "description": "Largura máxima do container"
+    },
+    "spacing": {
+      "type": "enumeration",
+      "enum": ["none", "sm", "md", "lg", "xl"],
+      "default": "lg",
+      "description": "Espaçamento vertical (padding top/bottom)"
+    },
+    "variant": {
+      "type": "string",
+      "description": "Variante livre (ex: \"split\", \"centered\", \"with-image\") — o frontend decide como renderizar"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "regex": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$",
+      "description": "Cor de fundo customizada em hex (sobrepõe o tema)"
+    },
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "hidden": {
+      "type": "boolean",
+      "default": false,
+      "description": "Oculta esta seção no site sem precisar removê-la"
+    }
+  }
+}

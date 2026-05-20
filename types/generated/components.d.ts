@@ -52,6 +52,7 @@ export interface SectionsContactForm extends Struct.ComponentSchema {
     icon: 'envelope';
   };
   attributes: {
+    appearance: Schema.Attribute.Component<'shared.appearance', false>;
     eyebrow: Schema.Attribute.String;
     submitLabel: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Enviar'>;
     subtitle: Schema.Attribute.Text;
@@ -69,6 +70,7 @@ export interface SectionsCta extends Struct.ComponentSchema {
     icon: 'bullhorn';
   };
   attributes: {
+    appearance: Schema.Attribute.Component<'shared.appearance', false>;
     description: Schema.Attribute.Text;
     primaryCta: Schema.Attribute.Component<'shared.button', false>;
     secondaryCta: Schema.Attribute.Component<'shared.button', false>;
@@ -84,6 +86,7 @@ export interface SectionsFaq extends Struct.ComponentSchema {
     icon: 'question-circle';
   };
   attributes: {
+    appearance: Schema.Attribute.Component<'shared.appearance', false>;
     items: Schema.Attribute.Component<'sections.faq-item', true>;
     subtitle: Schema.Attribute.Text;
     title: Schema.Attribute.String &
@@ -125,6 +128,7 @@ export interface SectionsFeatureGrid extends Struct.ComponentSchema {
     icon: 'grid';
   };
   attributes: {
+    appearance: Schema.Attribute.Component<'shared.appearance', false>;
     eyebrow: Schema.Attribute.String;
     features: Schema.Attribute.Component<'sections.feature', true>;
     subtitle: Schema.Attribute.Text;
@@ -140,6 +144,7 @@ export interface SectionsHero extends Struct.ComponentSchema {
     icon: 'rocket';
   };
   attributes: {
+    appearance: Schema.Attribute.Component<'shared.appearance', false>;
     eyebrow: Schema.Attribute.String;
     image: Schema.Attribute.Media<'images'>;
     primaryCta: Schema.Attribute.Component<'shared.button', false>;
@@ -157,6 +162,7 @@ export interface SectionsPortfolio extends Struct.ComponentSchema {
     icon: 'images';
   };
   attributes: {
+    appearance: Schema.Attribute.Component<'shared.appearance', false>;
     eyebrow: Schema.Attribute.String;
     projects: Schema.Attribute.Relation<'oneToMany', 'api::project.project'>;
     subtitle: Schema.Attribute.Text;
@@ -172,6 +178,7 @@ export interface SectionsProcess extends Struct.ComponentSchema {
     icon: 'diagram-project';
   };
   attributes: {
+    appearance: Schema.Attribute.Component<'shared.appearance', false>;
     eyebrow: Schema.Attribute.String;
     steps: Schema.Attribute.Component<'sections.process-step', true>;
     subtitle: Schema.Attribute.Text;
@@ -201,6 +208,7 @@ export interface SectionsServicesList extends Struct.ComponentSchema {
     icon: 'briefcase';
   };
   attributes: {
+    appearance: Schema.Attribute.Component<'shared.appearance', false>;
     eyebrow: Schema.Attribute.String;
     services: Schema.Attribute.Relation<'oneToMany', 'api::service.service'>;
     subtitle: Schema.Attribute.Text;
@@ -229,6 +237,7 @@ export interface SectionsStats extends Struct.ComponentSchema {
     icon: 'chart-pie';
   };
   attributes: {
+    appearance: Schema.Attribute.Component<'shared.appearance', false>;
     items: Schema.Attribute.Component<'sections.stat-item', true>;
     subtitle: Schema.Attribute.Text;
     title: Schema.Attribute.String;
@@ -243,6 +252,7 @@ export interface SectionsTestimonials extends Struct.ComponentSchema {
     icon: 'quote-right';
   };
   attributes: {
+    appearance: Schema.Attribute.Component<'shared.appearance', false>;
     eyebrow: Schema.Attribute.String;
     subtitle: Schema.Attribute.Text;
     testimonials: Schema.Attribute.Relation<
@@ -250,6 +260,31 @@ export interface SectionsTestimonials extends Struct.ComponentSchema {
       'api::testimonial.testimonial'
     >;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedAppearance extends Struct.ComponentSchema {
+  collectionName: 'components_shared_appearances';
+  info: {
+    description: 'Controles visuais reutiliz\u00E1veis: tema, alinhamento, largura, espa\u00E7amento e fundo';
+    displayName: 'Apar\u00EAncia';
+    icon: 'paint-brush';
+  };
+  attributes: {
+    alignment: Schema.Attribute.Enumeration<['left', 'center', 'right']> &
+      Schema.Attribute.DefaultTo<'left'>;
+    backgroundColor: Schema.Attribute.String;
+    backgroundImage: Schema.Attribute.Media<'images'>;
+    hidden: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    spacing: Schema.Attribute.Enumeration<['none', 'sm', 'md', 'lg', 'xl']> &
+      Schema.Attribute.DefaultTo<'lg'>;
+    theme: Schema.Attribute.Enumeration<
+      ['light', 'dark', 'primary', 'accent', 'muted']
+    > &
+      Schema.Attribute.DefaultTo<'light'>;
+    variant: Schema.Attribute.String;
+    width: Schema.Attribute.Enumeration<['narrow', 'default', 'wide', 'full']> &
+      Schema.Attribute.DefaultTo<'default'>;
   };
 }
 
@@ -330,6 +365,7 @@ declare module '@strapi/strapi' {
       'sections.stat-item': SectionsStatItem;
       'sections.stats': SectionsStats;
       'sections.testimonials': SectionsTestimonials;
+      'shared.appearance': SharedAppearance;
       'shared.button': SharedButton;
       'shared.nav-link': SharedNavLink;
       'shared.seo': SharedSeo;

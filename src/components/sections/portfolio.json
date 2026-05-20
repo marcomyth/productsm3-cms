@@ -21,6 +21,11 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::project.project"
+    },
+    "appearance": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.appearance"
     }
   }
 }
