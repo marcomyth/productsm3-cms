@@ -1,0 +1,26 @@
+{
+    "collectionName": "components_sections_testimonials",
+    "info": {
+        "displayName": "Depoimentos",
+        "icon": "quote-right",
+        "description": "Seção com depoimentos de clientes"
+    },
+    "options": {},
+    "attributes": {
+        "eyebrow": {
+            "type": "string"
+        },
+        "title": {
+            "type": "string",
+            "required": true
+        },
+        "subtitle": {
+            "type": "text"
+        },
+        "testimonials": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::testimonial.testimonial"
+        }
+    }
+}

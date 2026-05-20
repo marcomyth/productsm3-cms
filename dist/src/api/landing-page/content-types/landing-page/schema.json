@@ -1,0 +1,36 @@
+{
+    "kind": "singleType",
+    "collectionName": "landing_pages",
+    "info": {
+        "singularName": "landing-page",
+        "pluralName": "landing-pages",
+        "displayName": "Landing Page",
+        "description": "Página inicial da productsm3"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "seo": {
+            "type": "component",
+            "repeatable": false,
+            "component": "shared.seo"
+        },
+        "sections": {
+            "type": "dynamiczone",
+            "components": [
+                "sections.hero",
+                "sections.feature-grid",
+                "sections.stats",
+                "sections.services-list",
+                "sections.portfolio",
+                "sections.process",
+                "sections.testimonials",
+                "sections.faq",
+                "sections.cta",
+                "sections.contact-form"
+            ]
+        }
+    }
+}

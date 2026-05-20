@@ -1,0 +1,22 @@
+{
+    "collectionName": "components_sections_stats",
+    "info": {
+        "displayName": "Estatísticas",
+        "icon": "chart-pie",
+        "description": "Seção com métricas/números da empresa"
+    },
+    "options": {},
+    "attributes": {
+        "title": {
+            "type": "string"
+        },
+        "subtitle": {
+            "type": "text"
+        },
+        "items": {
+            "type": "component",
+            "repeatable": true,
+            "component": "sections.stat-item"
+        }
+    }
+}

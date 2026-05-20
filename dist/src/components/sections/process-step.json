@@ -1,0 +1,24 @@
+{
+    "collectionName": "components_sections_process_steps",
+    "info": {
+        "displayName": "Etapa do Processo",
+        "icon": "list-ol"
+    },
+    "options": {},
+    "attributes": {
+        "stepNumber": {
+            "type": "integer",
+            "required": true
+        },
+        "title": {
+            "type": "string",
+            "required": true
+        },
+        "description": {
+            "type": "text"
+        },
+        "icon": {
+            "type": "string"
+        }
+    }
+}

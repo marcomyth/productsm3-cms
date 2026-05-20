@@ -1,0 +1,55 @@
+{
+    "kind": "collectionType",
+    "collectionName": "leads",
+    "info": {
+        "singularName": "lead",
+        "pluralName": "leads",
+        "displayName": "Lead",
+        "description": "Leads capturados pelo formulário de contato"
+    },
+    "options": {
+        "draftAndPublish": false
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "name": {
+            "type": "string",
+            "required": true
+        },
+        "email": {
+            "type": "email",
+            "required": true
+        },
+        "phone": {
+            "type": "string"
+        },
+        "company": {
+            "type": "string"
+        },
+        "message": {
+            "type": "text"
+        },
+        "budget": {
+            "type": "enumeration",
+            "enum": ["ate_5k", "de_5k_a_15k", "de_15k_a_30k", "acima_30k", "nao_definido"]
+        },
+        "serviceInterest": {
+            "type": "relation",
+            "relation": "oneToOne",
+            "target": "api::service.service"
+        },
+        "source": {
+            "type": "string",
+            "description": "Origem (ex: landing-page, ads, organico)"
+        },
+        "status": {
+            "type": "enumeration",
+            "enum": ["novo", "em-contato", "qualificado", "convertido", "perdido"],
+            "default": "novo"
+        },
+        "notes": {
+            "type": "text",
+            "private": true
+        }
+    }
+}
