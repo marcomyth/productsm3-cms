@@ -10,6 +10,7 @@ const PUBLIC_READ: PublicAction[] = [
   { uid: 'api::service.service', actions: ['find', 'findOne'] },
   { uid: 'api::project.project', actions: ['find', 'findOne'] },
   { uid: 'api::testimonial.testimonial', actions: ['find', 'findOne'] },
+  { uid: 'api::blog-post.blog-post', actions: ['find', 'findOne'] },
 ];
 
 const PUBLIC_WRITE: PublicAction[] = [
