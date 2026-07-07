@@ -358,47 +358,56 @@ const TESTIMONIALS: TestimonialSeed[] = [
   },
 ];
 
-async function seedServices(strapi: Core.Strapi) {
-  const existing = await strapi.documents('api::service.service').findMany({ status: 'published' });
-  if (existing.length > 0) {
-    strapi.log.info(`[seed] services já existem (${existing.length}). Pulando.`);
-    return;
+/**
+ * Upsert idempotente para Strapi v5 (Document Service).
+ *
+ * O seed roda no bootstrap a cada `pm2 restart` (todo deploy). Por isso NÃO
+ * pode ser "create puro" (duplicaria) nem "skip-if-exists" (edições no seed.ts
+ * nunca chegariam à produção). Este helper:
+ *  1. Procura a entry pela chave natural (`filters`).
+ *  2. Se existe: atualiza o rascunho E publica — com draftAndPublish ligado, a
+ *     API pública lê a versão `published`; só `update` deixaria a mudança presa
+ *     no draft e o site não mudaria.
+ *  3. Se não existe: cria já publicado.
+ *
+ * Retorna o documentId (estável entre draft/published) para uso em relações.
+ *
+ * ⚠️ Fonte da verdade é o código: conteúdo de entries gerenciadas pelo seed
+ * deve ser editado aqui, não no admin — edições no admin são sobrescritas no
+ * próximo deploy.
+ */
+async function upsert(
+  strapi: Core.Strapi,
+  uid: string,
+  filters: Record<string, unknown>,
+  data: Record<string, unknown>,
+): Promise<string> {
+  const repo = strapi.documents(uid as any) as any;
+  const existing = await repo.findFirst({ filters, status: 'published' });
+  if (existing) {
+    await repo.update({ documentId: existing.documentId, data });
+    await repo.publish({ documentId: existing.documentId });
+    return existing.documentId as string;
   }
+  const created = await repo.create({ data, status: 'published' });
+  return created.documentId as string;
+}
 
+async function seedServices(strapi: Core.Strapi) {
   for (const s of SERVICES) {
-    await strapi.documents('api::service.service').create({
-      data: s,
-      status: 'published',
-    });
+    await upsert(strapi, 'api::service.service', { slug: s.slug }, s);
   }
-  strapi.log.info(`[seed] criados ${SERVICES.length} serviços.`);
+  strapi.log.info(`[seed] upsert de ${SERVICES.length} serviços.`);
 }
 
 async function seedProjects(strapi: Core.Strapi) {
-  const existing = await strapi.documents('api::project.project').findMany({ status: 'published' });
-  if (existing.length > 0) {
-    strapi.log.info(`[seed] projects já existem (${existing.length}). Pulando.`);
-    return;
-  }
-
   for (const p of PROJECTS) {
-    await strapi.documents('api::project.project').create({
-      data: p,
-      status: 'published',
-    });
+    await upsert(strapi, 'api::project.project', { slug: p.slug }, p);
   }
-  strapi.log.info(`[seed] criados ${PROJECTS.length} projetos.`);
+  strapi.log.info(`[seed] upsert de ${PROJECTS.length} projetos.`);
 }
 
 async function seedTestimonials(strapi: Core.Strapi) {
-  const existing = await strapi
-    .documents('api::testimonial.testimonial')
-    .findMany({ status: 'published' });
-  if (existing.length > 0) {
-    strapi.log.info(`[seed] testimonials já existem (${existing.length}). Pulando.`);
-    return;
-  }
-
   for (const t of TESTIMONIALS) {
     let projectDocId: string | undefined;
     if (t.projectSlug) {
@@ -408,8 +417,12 @@ async function seedTestimonials(strapi: Core.Strapi) {
       projectDocId = match?.documentId;
     }
 
-    await strapi.documents('api::testimonial.testimonial').create({
-      data: {
+    // Depoimento não tem slug; chave natural = nome + empresa.
+    await upsert(
+      strapi,
+      'api::testimonial.testimonial',
+      { name: t.name, company: t.company },
+      {
         name: t.name,
         role: t.role,
         company: t.company,
@@ -419,23 +432,13 @@ async function seedTestimonials(strapi: Core.Strapi) {
         order: t.order,
         ...(projectDocId ? { project: projectDocId } : {}),
       },
-      status: 'published',
-    });
+    );
   }
-  strapi.log.info(`[seed] criados ${TESTIMONIALS.length} depoimentos.`);
+  strapi.log.info(`[seed] upsert de ${TESTIMONIALS.length} depoimentos.`);
 }
 
 async function seedGlobal(strapi: Core.Strapi) {
-  const existing = await strapi
-    .documents('api::global.global')
-    .findFirst({ status: 'published' });
-  if (existing) {
-    strapi.log.info(`[seed] global já existe. Pulando.`);
-    return;
-  }
-
-  await strapi.documents('api::global.global').create({
-    data: {
+  await upsert(strapi, 'api::global.global', {}, {
       siteName: 'productsm3',
       tagline: 'Criamos sites e produtos digitais que geram resultado.',
       defaultSeo: {
@@ -481,22 +484,12 @@ async function seedGlobal(strapi: Core.Strapi) {
         whatsapp: '+5511999990000',
         address: 'São Paulo, SP — atendimento 100% remoto',
       },
-    },
-    status: 'published',
   });
 
-  strapi.log.info(`[seed] global criado.`);
+  strapi.log.info(`[seed] global upsert.`);
 }
 
 async function seedLandingPage(strapi: Core.Strapi) {
-  const existing = await strapi
-    .documents('api::landing-page.landing-page')
-    .findFirst({ status: 'published' });
-  if (existing) {
-    strapi.log.info(`[seed] landing-page já existe. Pulando.`);
-    return;
-  }
-
   const services = await strapi
     .documents('api::service.service')
     .findMany({ status: 'published', sort: 'order:asc' });
@@ -764,21 +757,18 @@ async function seedLandingPage(strapi: Core.Strapi) {
     },
   ];
 
-  await strapi.documents('api::landing-page.landing-page').create({
-    data: {
-      seo: {
-        metaTitle: 'productsm3 — Sites, landing pages e SaaS sob medida',
-        metaDescription:
-          'Estúdio de produtos digitais especializado em sites institucionais, landing pages, e-commerces e SaaS. Design, performance e SEO de ponta.',
-        keywords: 'criação de sites, landing page, e-commerce, saas, desenvolvimento web, agência digital',
-        preventIndexing: false,
-      },
-      sections,
+  await upsert(strapi, 'api::landing-page.landing-page', {}, {
+    seo: {
+      metaTitle: 'productsm3 — Sites, landing pages e SaaS sob medida',
+      metaDescription:
+        'Estúdio de produtos digitais especializado em sites institucionais, landing pages, e-commerces e SaaS. Design, performance e SEO de ponta.',
+      keywords: 'criação de sites, landing page, e-commerce, saas, desenvolvimento web, agência digital',
+      preventIndexing: false,
     },
-    status: 'published',
+    sections,
   });
 
-  strapi.log.info(`[seed] landing-page criada com ${sections.length} seções.`);
+  strapi.log.info(`[seed] landing-page upsert com ${sections.length} seções.`);
 }
 
 export async function runSeed(strapi: Core.Strapi) {
